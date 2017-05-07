@@ -67,8 +67,8 @@ class HTTPServer(object):
         for os.listdir()
             aTasks
 
-        self.sTemplatePath = join(self.sRootPath, self.sTemplatesDir)
-        self.sAssetsPath = join(self.sRootPath, self.sAssetsDir)
+        self.sTemplatePath  = join(self.sRootPath, self.sTemplatesDir)
+        self.sAssetsPath    = join(self.sRootPath, self.sAssetsDir)
         self.sTemporaryPath = join(self.sRootPath, self.sTemporaryDir)
 
         self.sHost = in_sHost
