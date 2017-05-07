@@ -3,17 +3,18 @@ global gdSettings
 
 gdSettings = {
     'sTasksDir': 'tasks',
-    'sTemplatesDir': ,
-    'assets': ,
+    'sTemplatesDir': 'templates',
+    'sAssetsDir': 'assets',
+    'sTemporaryDir': 'temporary',
     'dTemplates': {
         "index": "index.html",
         "error": "error.html",
-        "*": "error.html",
+        "*": "error.html"
     },
     'dControlers': {
         "/": "index.py",
         "test.html": "test.py",
-        "*": "error.py",
+        "*": "error.py"
     },
     'dRouter': {
         "/index.html": "/"

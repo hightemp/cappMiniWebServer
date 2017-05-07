@@ -11,43 +11,55 @@ from urlparse import *
 
 import settings
 
-class TaskThread(Thread):
+class Task(Thread):
+
+    objThread = None
 
     bPaused = False
     bActive = True
 
-    def run(self):
+    def __init__(self, sFilePath):
+        __import__(in_sFilePath)
+        print in_sFilePath
+        self.fnStop()
+        self.run = self.fnRun
+        # self.daemon = True
+        self.start()
+
+    def fnRun(self):
         while (self.bActive):
             while (not self.bPaused):
-                self.task()
+                self.fnTask()
 
-    def start(self):
+    def fnStart(self):
+        self.start()
         self.bPaused = False
         self.bActive = True
 
-    def stop(self):
+    def fnStop(self):
         self.bPaused = True
         self.bActive = False
 
-    def pause(self):
+    def fnPause(self):
         self.bPaused = True
 
-    def task(self):
+    def fnTask(self):
         pass
 
 class HTTPServer(object):
     aHeaders      = [('Content-Type', 'text/html'), ('Cache-control', 'no-cache')]
     dVariables    = {}
+
     aAccessDirectories = ['assets', 'temporary']
     sTasksDir     = 'tasks'
     sTemplatesDir = 'templates'
     sAssetsDir    = 'assets'
     sTemporaryDir = 'temporary'
+
     sHost         = ''
     iPort         = 8080
-    aTasks        = []
 
-    # dir(HTTPServer)
+    aTasks        = []
 
     def __init__(self,
                  in_sHost='127.0.0.1',
@@ -64,8 +76,9 @@ class HTTPServer(object):
 
         self.sTasksPath = join(self.sRootPath, self.sTasksDir)
 
-        for os.listdir()
-            aTasks
+        if isdir(self.sTasksPath):
+            for sFileName in os.listdir(self.sTasksPath):
+                self.aTasks.append(Task(join(self.sRootPath, sFileName)))
 
         self.sTemplatePath  = join(self.sRootPath, self.sTemplatesDir)
         self.sAssetsPath    = join(self.sRootPath, self.sAssetsDir)

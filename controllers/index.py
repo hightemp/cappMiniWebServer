@@ -1,2 +1,3 @@
 
 class IndexController():
+    pass
