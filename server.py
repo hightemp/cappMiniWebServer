@@ -7,7 +7,6 @@ from threading import *
 import os
 from os.path import *
 import re
-from requests.compat import urljoin, quote_plus
 from urlparse import *
 
 import settings
@@ -37,16 +36,16 @@ class TaskThread(Thread):
         pass
 
 class HTTPServer(object):
-    aHeaders = [('Content-Type', 'text/html'), ('Cache-control', 'no-cache')]
-    dVariables = {}
+    aHeaders      = [('Content-Type', 'text/html'), ('Cache-control', 'no-cache')]
+    dVariables    = {}
     aAccessDirectories = ['assets', 'temporary']
-    sTasksDir = 'tasks'
+    sTasksDir     = 'tasks'
     sTemplatesDir = 'templates'
-    sAssetsDir = 'assets'
+    sAssetsDir    = 'assets'
     sTemporaryDir = 'temporary'
-    sHost = ''
-    iPort = 8080
-    aTasks = []
+    sHost         = ''
+    iPort         = 8080
+    aTasks        = []
 
     # dir(HTTPServer)
 
