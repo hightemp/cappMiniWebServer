@@ -18,13 +18,13 @@ class Task(Thread):
     bPaused = False
     bActive = True
 
-    def __init__(self, sFilePath):
-        __import__(in_sFilePath)
+    def __init__(self, in_sFilePath):
+        # __import__(in_sFilePath)
         print in_sFilePath
         self.fnStop()
         self.run = self.fnRun
         # self.daemon = True
-        self.start()
+        self.fnStart()
 
     def fnRun(self):
         while (self.bActive):
@@ -32,7 +32,6 @@ class Task(Thread):
                 self.fnTask()
 
     def fnStart(self):
-        self.start()
         self.bPaused = False
         self.bActive = True
 
@@ -89,7 +88,7 @@ class HTTPServer(object):
 
         WSGIServer("%s:%d" % (in_sHost, in_iPort), self.fnResponse).serve_forever()
 
-    def fnGetHostURL(self,
+    def fnGetFullURL(self,
                      sPath=''):
 
         objPath = urlsplit("http://%s:%d" % (self.sHost, self.iPort))
@@ -161,21 +160,19 @@ class HTTPServer(object):
             sMethod  = in_aEnv['REQUEST_METHOD']
             sPath    = in_aEnv['PATH_INFO']
 
-            aMatchRouterResult = self.fnMatchItemsByMask(sPath, self.dSettings['dRouter'])
+            aMatchRouteResult = self.fnMatchItemsByMask(sPath, self.dSettings['dRoutes'])
 
-            if len(aMatchResult) > 0:
-                sLocation = self.fnGetHostURL(aMatchRouterResult[0])
-                sHTTPHeader = '301 Moved Permanently'
-                aHeaders = [('Location', sLocation)]
-            else:
-                aMatchControllersResult = self.fnMatchItemsByMask(sPath, self.dSettings['dControlers'])
-                aMatchTemplatesResult = self.fnMatchItemsByMask(sPath, self.dSettings['dTemplates'])
-                aResult = fnSendPage()
+            if len(aMatchRouteResult) > 0:
+                if "sRedirect" in aMatchRouteResult:
+                    sLocation = self.fnGetFullURL(aMatchRouteResult["sRedirect"])
+                    sHTTPHeader = '301 Moved Permanently'
+                    aHeaders = [('Location', sLocation)]
+                else:
+                    pass
+                    # aMatchRouteResult['sControler']
+                    # aMatchRouteResult['sTemplate']
+                    # aResult = fnSendPage()
 
-            # if (sPath):
-            # fnSendHTMLPage()
-
-            # print self.fnMatchItemsByMask(sPath, self.dSettings['dControlers'])
         except Exception as objException:
             print objException
 

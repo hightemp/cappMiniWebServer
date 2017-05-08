@@ -6,19 +6,17 @@ gdSettings = {
     'sTemplatesDir': 'templates',
     'sAssetsDir': 'assets',
     'sTemporaryDir': 'temporary',
-    'dTemplates': {
-        "index": "index.html",
-        "error": "error.html",
-        "*": "error.html"
+
+    'dRoutes': {
+        "/": {
+            'sTemplate': 'index.html',
+            'sControler': 'index.py'
+        },
+        "*": {
+            'sRedirect': '/'
+        }
     },
-    'dControlers': {
-        "/": "index.py",
-        "test.html": "test.py",
-        "*": "error.py"
-    },
-    'dRouter': {
-        "/index.html": "/"
-    },
+
     'aDefaultHeaders': [
         ('Content-Type', 'text/html')
     ],
