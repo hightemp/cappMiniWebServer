@@ -138,7 +138,7 @@ class HTTPServer(object):
 
         for sKey, objValue in in_dDictonary.iteritems():
             sMask = sKey
-            sMask = re.escape(sMask)
+            sMask = r'^%s$' % re.escape(sMask)
             sMask = re.sub(r'\\[*]', r'.*?', sMask)
             sMask = re.sub(r'\\[?]', r'.{1,1}', sMask)
             aMatches = re.match(sMask, in_sText)
@@ -162,6 +162,8 @@ class HTTPServer(object):
 
             aMatchRouteResult = self.fnMatchItemsByMask(sPath, self.dSettings['dRoutes'])
 
+            print(aMatchRouteResult)
+
             if len(aMatchRouteResult) > 0:
                 if "sRedirect" in aMatchRouteResult:
                     sLocation = self.fnGetFullURL(aMatchRouteResult["sRedirect"])
@@ -177,6 +179,7 @@ class HTTPServer(object):
             print objException
 
         in_objResponse(sHTTPHeader, aHeaders)
+
         return aResult
 
 if __name__ == "__main__":
